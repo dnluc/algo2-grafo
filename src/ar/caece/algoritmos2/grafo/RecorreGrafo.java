@@ -36,7 +36,7 @@ public class RecorreGrafo {
 		
 			ciudadesVisitadas.add(ciudadOrigen.getCiudadId());
 			
-			camino.add(tipoCamino.toString() + " -> " + ciudadOrigen.getCiudadId() + ' ' + ciudadOrigen.getNombre() +  " I:" + ciudadOrigen.getIslaId());
+			camino.add( "(" + tipoCamino.toString().substring(0, 1) + ") -> " + ciudadOrigen.getIslaId()  + ciudadOrigen.getNombre());
 			
 			
 			if (ciudadOrigen.getIslaId() != islalaIdDestino || !ciudadOrigen.getNombre().equals(nombreCiudadDestino)) {
