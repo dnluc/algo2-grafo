@@ -1,6 +1,5 @@
 package ar.caece.algoritmos2.grafo;
 
-import java.util.HashSet;
 import java.util.List;
 
 public class GrafoMain {
@@ -12,11 +11,10 @@ public class GrafoMain {
 		
 		RecorreGrafo recorreGrafo = new RecorreGrafo();
 		
-		List<List<String>> caminos = recorreGrafo.recorrer(archipielago, 1, "C", 2 , "D"); // 3 -> 10
-	
-		for (List<String> camino : caminos) {
+		List<List<CiudadVisitada>> caminos = recorreGrafo.recorrer(archipielago, 3, "B", 1 , "A", 100); // 3 -> 10
+		
+		for (List<CiudadVisitada> camino : caminos) {
 			System.out.println(camino);	
-			
 		}
 		
 	}

@@ -81,7 +81,7 @@ public class TestGrafo {
 		Ciudad ciudad12 = new Ciudad();
 		ciudad12.setCiudadId(12);
 		ciudad12.setIslaId(3);
-		ciudad12.setNombre("C");
+		ciudad12.setNombre("E");
 
 		Isla isla3 = new Isla();
 		isla3.setIslaId(3);

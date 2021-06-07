@@ -70,7 +70,7 @@ public class Ciudad {
 	@Override
 	public String toString() {
 		
-		return islaId + '-' + nombre;
+		return String.valueOf(this.getCiudadId());
 	}
 
 	

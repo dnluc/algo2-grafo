@@ -9,19 +9,19 @@ import java.util.Set;
 public class RecorreGrafo {
 
 	
-	public List<List<String>>  recorrer(Archipielago archipielago, int islalaIdOrigen, 
+	public List<List<CiudadVisitada>>  recorrer(Archipielago archipielago, int islalaIdOrigen, 
 			String nombreCiudadOrigen, int islalaIdDestino, 
-			String nombreCiudadDestino) {
+			String nombreCiudadDestino, int maximoCaminos) {
 			
 		
 		Isla islaOrigen = archipielago.obtenerIsla(islalaIdOrigen);
 		Ciudad ciudadOrigen = islaOrigen.obtenerCiudad(nombreCiudadOrigen);
 		
-		Set<Integer> ciudadesVisitadas =  new HashSet<>();
-		List<String> camino =  new ArrayList<>();
-		List<List<String>> caminos =  new ArrayList<>();
+		List<Ciudad> ciudadesVisitadas =  new ArrayList<>();
+		List<CiudadVisitada> camino =  new ArrayList<>();
+		List<List<CiudadVisitada>> caminos = new ArrayList<>();
 		
-		recorrer(ciudadOrigen, islalaIdDestino, nombreCiudadDestino, ciudadesVisitadas, camino, caminos, TipoCamino.INICIO);
+		recorrer(ciudadOrigen, islalaIdDestino, nombreCiudadDestino, ciudadesVisitadas, camino, caminos, maximoCaminos, TipoCamino.INICIO);
 		
 		return caminos;
 	
@@ -29,36 +29,40 @@ public class RecorreGrafo {
 	
 	
 	private void recorrer(Ciudad ciudadOrigen, int islalaIdDestino, 
-			String nombreCiudadDestino, Set<Integer> ciudadesVisitadas, List<String> camino, List<List<String>> caminos, TipoCamino tipoCamino) {
+			String nombreCiudadDestino, List<Ciudad> ciudadesVisitadas, List<CiudadVisitada> camino,
+			List<List<CiudadVisitada>> caminos, int maximoCaminos, TipoCamino tipoCamino) {
 		
+
 		
-		if (!ciudadesVisitadas.contains(ciudadOrigen.getCiudadId())) {
-		
-			ciudadesVisitadas.add(ciudadOrigen.getCiudadId());
+		if (!ciudadesVisitadas.contains(ciudadOrigen) && caminos.size() < maximoCaminos) {
+
+			CiudadVisitada ciudadVisitada = new CiudadVisitada();
+			ciudadVisitada.setCiudad(ciudadOrigen);
+			ciudadVisitada.setTipoCamino(tipoCamino);
 			
-			camino.add( "(" + tipoCamino.toString().substring(0, 1) + ") -> " + ciudadOrigen.getIslaId()  + ciudadOrigen.getNombre());
-			
+			camino.add(ciudadVisitada);
+			ciudadesVisitadas.add(ciudadOrigen);
 			
 			if (ciudadOrigen.getIslaId() != islalaIdDestino || !ciudadOrigen.getNombre().equals(nombreCiudadDestino)) {
 				
 				for (Ciudad ciudad : ciudadOrigen.getCaminos()) {
 					
 					recorrer(ciudad, islalaIdDestino, 
-							nombreCiudadDestino, ciudadesVisitadas, camino, caminos, TipoCamino.CARRETERA);
-					
+							nombreCiudadDestino, ciudadesVisitadas, camino, caminos, maximoCaminos, TipoCamino.CARRETERA);
+
 				}
 				
 				for (Ciudad ciudad : ciudadOrigen.getHelipuertos()) {
 					
 					recorrer(ciudad, islalaIdDestino, 
-							nombreCiudadDestino, ciudadesVisitadas, camino, caminos, TipoCamino.HELICOPTERO);
-					
+							nombreCiudadDestino, ciudadesVisitadas, camino, caminos, maximoCaminos,  TipoCamino.HELICOPTERO);
 				}
 			} else {
-				
 				caminos.add(new ArrayList<>(camino));
-				
 			}
+			
+			camino.remove(ciudadVisitada);
+			ciudadesVisitadas.remove(ciudadOrigen);
 				
 		}
 	}
