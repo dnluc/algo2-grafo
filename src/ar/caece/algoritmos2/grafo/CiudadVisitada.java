@@ -24,7 +24,9 @@ public class CiudadVisitada {
 	@Override
 	public String toString() {
 		
-		return String.valueOf(this.getTipoCamino() + " -> " + String.valueOf(this.ciudad.getCiudadId()));
+		//return String.valueOf(this.getTipoCamino() + " -> " + String.valueOf(this.ciudad.getCiudadId()));
+		return String.valueOf(this.getTipoCamino() + " -> " +
+		String.valueOf(this.ciudad.getIslaId()) + " " + String.valueOf(this.ciudad.getNombre()));
 	}
 	
 	
